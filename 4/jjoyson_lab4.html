@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- Modify Title between these comments (Choose correct class number and substitute your username) -->
+	<title>ITMD 465 Lab 4 - jjoyson</title>
+	<!-- Modify Title between these comments -->
+    <style type="text/css">
+        #wrapper {
+			text-align: center;
+		}
+        table{
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        th, td {
+        text-align: left;
+        padding: 8px;
+        }
+
+        th {
+            background-color: rgba(140, 150, 141, 0.719);
+        }
+
+        tr:nth-child(odd) {background-color: #f2f2f2;}
+
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Modify headlines between these comments (Choose correct class number and substitute Name and Email) -->
+		<h1>ITMD 465 - Lab 4</h1>
+		<h2>Jithin Joyson - jjoyson@hawk.iit.edu</h2>
+		<!-- Modify headlines between these comments -->
+        <button id="btn"> Load Data</button>
+        <button id="btn2"> Reset</button>
+        <h2>Employee List</h2>
+        <table id= "results">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Title</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Active</th>
+            </tr>
+        </table>
+	</div>
+	
+	<script type="text/javascript">
+		// Begin JavaScript Code Here - Do not put JavaScript outside these comments.
+		let resetbtn = document.getElementById('btn2');
+		resetbtn.disabled = true;
+
+		document.getElementById('btn').addEventListener('click', function(){
+        var myRequest = new XMLHttpRequest();
+
+        myRequest.onreadystatechange = function(){ 
+            if (myRequest.readyState === 4) {    
+                if (myRequest.status === 200) {
+                    var a = JSON.parse(myRequest.responseText);
+                    var table = document.getElementById('results');
+                    for(var i = 0; i < a.length; i++) {
+                        console.log(a[i]);
+                        var row = document.createElement('tr');
+                        row.id = a[i].id;
+
+                        var id = document.createElement('td');
+                        var id_text = document.createTextNode(a[i].id);
+                        id.appendChild(id_text);
+                        row.appendChild(id);
+
+                        var first_name = document.createElement('td');
+                        var first_name_text = document.createTextNode(a[i].first_name);
+                        first_name.appendChild(first_name_text);
+                        row.appendChild(first_name);
+
+                        var last_name = document.createElement('td');
+                        var last_name_text = document.createTextNode(a[i].last_name);
+                        last_name.appendChild(last_name_text);
+                        row.appendChild(last_name);
+
+                        var title = document.createElement('td');
+                        var title_text = document.createTextNode(a[i].title);
+                        title.appendChild(title_text);
+                        row.appendChild(title);
+
+                        var email = document.createElement('td');
+                        var email_text = document.createTextNode(a[i].email);
+                        email.appendChild(email_text);
+                        row.appendChild(email);
+
+                        var gender = document.createElement('td');
+                        var gender_text = document.createTextNode(a[i].gender);
+                        gender.appendChild(gender_text);
+                        row.appendChild(gender);
+
+                        var active = document.createElement('td');
+                        var active_text = document.createTextNode(a[i].active);
+                        active.appendChild(active_text);
+                        row.appendChild(active);
+                        table.appendChild(row);
+                    }
+                }
+            }	
+        };	
+
+
+        myRequest.open('GET', 'http://libertyville.rice.iit.edu/scripts/4565_lab4.php', true);
+        
+        myRequest.send();
+
+        let loadbtn = document.getElementById('btn');
+		loadbtn.disabled = true;
+
+        let resetbtn = document.getElementById('btn2');
+		resetbtn.disabled = false;
+
+
+    });
+
+    document.getElementById('btn2').addEventListener('click', function(){
+
+        document.getElementById('results').innerHTML = '';
+
+        var table = document.getElementById('results');
+
+        var row = document.createElement('tr');
+
+        var id = document.createElement('th');
+        var id_text = document.createTextNode('ID');
+        id.appendChild(id_text);
+        row.appendChild(id);
+
+        var first_name = document.createElement('th');
+        var first_name_text = document.createTextNode('First Name');
+        first_name.appendChild(first_name_text);
+        row.appendChild(first_name);
+
+        var last_name = document.createElement('th');
+        var last_name_text = document.createTextNode('Last Name');
+        last_name.appendChild(last_name_text);
+        row.appendChild(last_name);
+
+        var title = document.createElement('th');
+        var title_text = document.createTextNode('Title');
+        title.appendChild(title_text);
+        row.appendChild(title);
+
+        var email = document.createElement('th');
+        var email_text = document.createTextNode('Email');
+        email.appendChild(email_text);
+        row.appendChild(email);
+
+        var gender = document.createElement('th');
+        var gender_text = document.createTextNode('Gender');
+        gender.appendChild(gender_text);
+        row.appendChild(gender);
+
+        var active = document.createElement('th');
+        var active_text = document.createTextNode('Active');
+        active.appendChild(active_text);
+        row.appendChild(active);
+
+        table.appendChild(row);
+
+        let loadbtn = document.getElementById('btn');
+		loadbtn.disabled = false;
+        let resetbtn = document.getElementById('btn2');
+		resetbtn.disabled = true;
+
+    });
+
+		// End JavaScript Code Here - Do not put JavaScript outside these comments.
+	</script>
+</body>
+</html>
